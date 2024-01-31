@@ -5,12 +5,25 @@ import Note from "./Note";
 import CreateArea from "./CreateArea";
 
 function App() {
-    // Add new note to an array.
-    const [notes, addNote] = useState([])
+    
+    const [notes, setNotes] = useState([])
+
+    // Add new note to notes array.
     function newNote(note){
-        addNote(function(prevNotes){
+        setNotes(function(prevNotes){
             return [...prevNotes, note]
         });
+    }
+
+    // Remove note from notes array
+    function deleteNote(id){
+        setNotes(function(prevNotes){
+            // Using filter fn to filter out the item to be deleted.
+            return prevNotes.filter(function(item, index){
+                return index !== id;
+            });
+        });
+
     }
 
     return (
@@ -22,8 +35,11 @@ function App() {
                 return (
                     <Note 
                         key={index}
+                        // Pass a id over to the Note component
+                        index={index}
                         title={note.title}
                         content={note.content} 
+                        onDelete={deleteNote}
                     />
                     )
             })}

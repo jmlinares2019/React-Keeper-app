@@ -2,13 +2,13 @@ import React, {useState} from "react";
 
 function CreateArea(props) {
     // Create a constant that keeps track of the title and content.
-    const [newNote, setNewNote] = useState({
+    const [note, setNote] = useState({
         title: "",
         content: "",
     });
     function handleChange(e){
         const { name, value } = e.target;
-        setNewNote(function(prevValues){        
+        setNote(function(prevValues){        
             if(name === "title"){
                 return {
                     title: value,
@@ -30,18 +30,21 @@ function CreateArea(props) {
                     name="title" 
                     placeholder="Title" 
                     onChange={handleChange} 
-                    value={newNote.title}/>
+                    value={note.title}/>
                 <textarea 
                     name="content" 
                     placeholder="Take a note..." 
                     rows="3" 
                     onChange={handleChange} 
-                    value={newNote.content}/>
+                    value={note.content}/>
                 {/* Pass the new note back to the App. */}
                 <button onClick={function(e){
+                    // preventing page reload
                     e.preventDefault();
-                    props.onAdd(newNote);
-                    setNewNote({
+                    // calling newNote fn passing 'note' as argument
+                    props.onAdd(note);
+                    // clearing Create area inputs
+                    setNote({
                         title: "",
                         content: ""
                     });
